@@ -85,4 +85,28 @@ const validateIntern = async function(internData){
     return errors;
 }
 
+
+const getCollegeDetails = async function(req, res) {
+    try {
+
+        const getData = req.query.collegeName;
+        if(!getData || getData.trim().length===0) {
+            return res.status(400).send({status: false, msg: "Not Found"})
+        }
+        const getCollegeData = await collegeModel.findOne({name:getData})
+
+        const {name, fullName, logoLink, collegeId} = getCollegeData;
+
+        const interests = await internModel.find({collegeId})
+        const collegeDetails = { name, fullName, logoLink, interests }
+
+        res.status(200).send({status:true, data: collegeDetails})
+
+    }
+    catch(error){
+    return res.status(500).send({status:false,msg:error.message})
+    }   
+}
+//Export function
 module.exports.createIntern=createIntern;
+module.exports.getCollegeDetails=getCollegeDetails;

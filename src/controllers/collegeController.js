@@ -13,6 +13,12 @@ const createCollege = async function(req, res) {
             return res.status(400).send({status: false, msg:"Mandatory fields are missing", errors:errors});
         }
 
+        // validate Url
+        const validUrl = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/.test(collegeData.logoLink);
+        if(!validUrl) {
+            return res.status(400).send({status: false, msg: "Invalid Url"})  
+        }
+
         //check name is already used
         const isNameUsed = await collegeModel.findOne({name:collegeData.name});
         if(isNameUsed)
@@ -34,14 +40,17 @@ const createCollege = async function(req, res) {
 
 const validateCollege = async function(collegeData){
     const errors = [];
-    //Mandotory fields
-    if (!collegeData.name) {
+
+    const { name, fullName, logoLink} = collegeData //Destructuring collegeData objects
+
+    //Mandatory fields
+    if (!name || name.trim().length===0) {
         errors.push("name required")
     }
-    if (!collegeData.fullName) {
+    if (!fullName || fullName.trim().length===0) {
         errors.push("fullName required")
     }
-    if (!collegeData.logoLink) {
+    if (!logoLink) {
         errors.push("link required")
     }
     return errors;
