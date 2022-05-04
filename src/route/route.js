@@ -9,7 +9,9 @@ const app = express()//used express to create global middleware
 //api's
 router.post('/functionup/colleges', collegeContoller.createCollege);
 
-router.post('/functionup/interns', internContoller.createIntern)
+router.post('/functionup/interns', internContoller.createIntern);
+
+router.get('/functionup/collegeDetails', internContoller.getCollegeDetails)
 
 router.get('/functionup/collegeDetails', internContoller.getCollegeDetails)
 
