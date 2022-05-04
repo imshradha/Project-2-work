@@ -12,6 +12,14 @@ const createCollege = async function(req, res) {
         if(errors.length > 0) {
             return res.status(400).send({status: false, msg:"Mandatory fields are missing", errors:errors});
         }
+
+        //check name is already used
+        const isNameUsed = await collegeModel.findOne({name:collegeData.name});
+        if(isNameUsed)
+        {
+            return res.status(400).send({status:false,msg:`document for ${collegeData.name} college is already created`})
+        }
+
         //create college
         const college = await collegeModel.create(collegeData);
 
