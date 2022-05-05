@@ -11,7 +11,7 @@ const createIntern = async function (req, res) {
         if (errors.length > 0) {
             return res.status(400).send({ status: false, msg: "Mandatory fields are missing", errors: errors });
         }
-        //assigning values to variables
+        //assigning values to multiple variables
         const { name, email, mobile, collegeName } = requestBody;
 
         //check mobile number is valid or not
@@ -50,13 +50,14 @@ const createIntern = async function (req, res) {
             return res.status(400).send({ status: false, msg: "Invalid college id" })
         }
 
-        const intern = { name, email, mobile, collegeName }
+        const intern = { name, email, mobile, collegeId }
 
         //create intern
         const internData = await internModel.create(intern);
         return res.status(201).send({ status: true, data: internData });
     }
     catch (error) {
+        // return a error if any case fail on try block 
         return res.status(500).send({ status: false, msg: error.message })
     }
 }
