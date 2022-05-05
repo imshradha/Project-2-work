@@ -1,6 +1,6 @@
 const internModel = require("../models/internModel");    // import internModel
 const collegeModel = require("../models/collegeModel");  //Import collegeModel
-const { findOne } = require("../models/collegeModel");
+// const { findOne } = require("../models/collegeModel");
 
 const createIntern = async function (req, res) {
     try {
@@ -49,7 +49,7 @@ const createIntern = async function (req, res) {
             return res.status(400).send({ status: false, msg: "Invalid college id" })
         }
 
-        const intern = { name, email, mobile, collegeId }
+        const intern = { name, email, mobile, collegeName }
 
         //create intern
         const internData = await internModel.create(intern);
@@ -75,7 +75,7 @@ const validateIntern = async function (internData) {
         errors.push("mobile number required")
     }
     if (!collegeName || collegeName.trim().length === 0) {
-        errors.push("college name required")
+        errors.push("collegeName required")
     }
     return errors;
 }
@@ -99,7 +99,7 @@ const getCollegeDetails = async function (req, res) {
         const { name, fullName, logoLink, _id } = collegeDetails; // destructuring
 
         //find documents for interests in given college using _id
-        const interests = await internModel.find({ collegeId: _id });
+        const interests = await internModel.find({ collegeId:_id, isDeleted:false}).select({_id:1, name:1, email:1, mobile:1});
 
         const internDetails = { name, fullName, logoLink, interests }
 

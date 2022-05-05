@@ -1,6 +1,6 @@
 const express = require('express')//import express
 const router = express.Router();//used express to create route handlers
-//import controllers and middlewares
+//import controllers 
 const collegeContoller = require('../controllers/collegeController');
 const internContoller = require('../controllers/internController');
 
@@ -12,9 +12,6 @@ router.post('/functionup/colleges', collegeContoller.createCollege);
 router.post('/functionup/interns', internContoller.createIntern);
 
 router.get('/functionup/collegeDetails', internContoller.getCollegeDetails)
-
-router.get('/functionup/collegeDetails', internContoller.getCollegeDetails)
-
 
 //export router
 module.exports = router;
