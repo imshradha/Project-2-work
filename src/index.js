@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));//extended: true precises tha
 
 //a framework that helps to establish a connection b/w node and mongoDB
 mongoose.connect(
-    "mongodb+srv://tara:c0VtDGqc7Ugvjpug@cluster0.0vu5f.mongodb.net/project2?retryWrites=true&w=majority"
+    "mongodb+srv://tara:c0VtDGqc7Ugvjpug@cluster0.0vu5f.mongodb.net/group07Database?retryWrites=true&w=majority"
     ,
     { useNewurlparser: true })
     .then(() => console.log("mongoDB Connected"))//return fullfiled promise
