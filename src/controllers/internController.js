@@ -14,27 +14,28 @@ const createIntern = async function (req, res) {
         //assigning values to multiple variables
         const { name, email, mobile, collegeName } = requestBody;
 
-        //check mobile number is valid or not
-        const isValidNumber = /^\d{10}$/.test(mobile)
-        if (!isValidNumber) {
-            return res.status(400).send({ status: false, msg: "Invalid mobile number" })
-        }
-
         // check email is valid or not
         const isValidEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email);
         if (!isValidEmail) {
             return res.status(400).send({ status: false, msg: "Invalid email address" })
         }
 
-        // check email is already used
-        const isEmailUsed = await internModel.findOne({ email });
-        if (isEmailUsed) {
-            return res.status(400).send({ status: false, msg: `${email} email address is already registered` })
+        //check mobile number is valid or not
+        const isValidNumber = /^\d{10}$/.test(mobile)
+        if (!isValidNumber) {
+            return res.status(400).send({ status: false, msg: "Invalid mobile number" })
         }
+
         // check mobile number is already used
         const isMobileUsed = await internModel.findOne({ mobile });
         if (isMobileUsed) {
             return res.status(400).send({ status: false, msg: `${mobile} mobile number is already registered` })
+        }
+
+        // check email is already used
+        const isEmailUsed = await internModel.findOne({ email });
+        if (isEmailUsed) {
+            return res.status(400).send({ status: false, msg: `${email} email address is already registered` })
         }
 
         //find college with given college name
@@ -43,7 +44,6 @@ const createIntern = async function (req, res) {
             return res.status(404).send({ status: false, msg: "college not found" })
         }
         const collegeId = college._id
-
         //check collegeid is valid objectid
         const isValidCollegeId = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/.test(collegeId);
         if (!isValidCollegeId) {
