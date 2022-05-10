@@ -1,5 +1,6 @@
 const express = require('express')//import express
 const router = express.Router();//used express to create route handlers
+
 //import controllers 
 const collegeContoller = require('../controllers/collegeController');
 const internContoller = require('../controllers/internController');
